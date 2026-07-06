@@ -2716,6 +2716,127 @@ body { min-height: 100dvh; overscroll-behavior: none; -webkit-touch-callout: non
   .unlock-form { width: 100%; max-width: 430px; }
 }
 
+
+/* ===== Taktik 2.0: Mobile Shell ===== */
+@media (max-width: 900px) {
+  /* Neuer schlanker Kopf */
+  .mini-header {
+    flex: 0 0 auto;
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #171b19, #0d100e);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .mini-header img { width: 30px; height: 30px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,0.9); }
+  .mini-header .mini-title { font-weight: 900; font-size: 0.92rem; color: #fff; letter-spacing: 0.02em; }
+  .mini-header #statusText { margin-left: 2px; font-size: 0.64rem; color: #b9c2bc; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .mini-header .icon-button {
+    min-width: 38px; min-height: 38px;
+    color: #fff; background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.18); border-radius: 10px;
+  }
+  .mini-header .icon-button[disabled] { opacity: 0.3; }
+
+  /* Platz fuer die Tab-Leiste unten */
+  .app-shell { padding-bottom: calc(max(env(safe-area-inset-bottom), 4px) + 62px); }
+
+  /* Tab-Leiste */
+  .tab-bar {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 940;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 6px max(env(safe-area-inset-right), 8px) max(env(safe-area-inset-bottom), 8px) max(env(safe-area-inset-left), 8px);
+    background: rgba(10, 12, 11, 0.94);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(255,255,255,0.09);
+  }
+  .tab-bar button {
+    display: grid; place-items: center; gap: 2px;
+    min-height: 52px;
+    border: 0; background: none;
+    color: rgba(255,255,255,0.62);
+    font-size: 0.62rem; font-weight: 800; letter-spacing: 0.02em;
+  }
+  .tab-bar button .tab-ico { font-size: 1.25rem; line-height: 1; }
+  .tab-bar button.is-active { color: #fff; }
+
+  /* Werkzeuge-Sheet: enthaelt die komplette alte Werkzeugleiste */
+  .tools-sheet {
+    position: fixed;
+    left: 0; right: 0;
+    bottom: calc(max(env(safe-area-inset-bottom), 8px) + 58px);
+    z-index: 930;
+    padding: 10px 10px 12px;
+    background: rgba(13, 16, 14, 0.97);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -16px 44px rgba(0,0,0,0.5);
+    transform: translateY(110%);
+    transition: transform 200ms ease;
+    max-height: 55dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tools-sheet.is-open { transform: translateY(0); }
+  .tools-sheet .toolbar { border: 0; box-shadow: none; padding: 0; background: none; }
+  .tools-sheet .toolbar .brand { display: none; }
+  .tools-sheet .toolbar-row-tools {
+    overflow-x: visible;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .tools-sheet .controls { flex-wrap: wrap; width: auto; }
+
+  /* Panel und Scrim ueber Sheet und Tab-Leiste heben */
+  .panel { z-index: 960 !important; }
+  .panel-scrim { z-index: 950 !important; }
+  .mobile-fab { display: none !important; }
+  .app-version-badge { bottom: calc(max(env(safe-area-inset-bottom), 8px) + 64px); }
+  .slot-picker, .slot-picker-backdrop { z-index: 1210; }
+}
+
+
+/* ===== 2.1: Kompakte Marker — Uebersicht auf kleinem Feld ===== */
+@media (max-width: 900px) {
+  /* Deutlich kleinere Spieler- und Gegner-Marker */
+  .player, .empty-slot, .opponent-player {
+    width: clamp(26px, 7.2cqw, 40px) !important;
+    height: clamp(26px, 7.2cqw, 40px) !important;
+    border-width: 2px !important;
+    box-shadow: 0 4px 10px rgba(0, 20, 50, 0.28) !important;
+  }
+  .player, .opponent-player { font-size: clamp(0.6rem, 2.4cqw, 0.8rem) !important; }
+
+  /* Namensschilder: klein, halbtransparent, dicht am Marker, nichts verdecken */
+  .player small, .opponent-player small {
+    top: calc(100% + 2px) !important;
+    padding: 1px 5px !important;
+    max-width: clamp(52px, 15cqw, 84px) !important;
+    font-size: clamp(0.46rem, 1.9cqw, 0.6rem) !important;
+    line-height: 1.15 !important;
+    border-radius: 4px !important;
+    background: rgba(255, 255, 255, 0.78) !important;
+    box-shadow: none !important;
+  }
+  .opponent-player small {
+    background: rgba(8, 8, 8, 0.72) !important;
+  }
+
+  /* Entfernen-Kreuz mitverkleinern */
+  .player .slot-remove, .player .remove-btn, .player button[aria-label*="entfernen" i] {
+    transform: scale(0.8);
+  }
+
+  /* Ball kleiner */
+  .ball img, .ball svg { width: clamp(18px, 5cqw, 26px); height: auto; }
+
+  /* Plus auf leeren Slots mitschrumpfen */
+  .empty-slot::after { font-size: clamp(1rem, 4.4cqw, 1.5rem); }
+}
+
 </style>
   </head>
   <body class="tab-match">
@@ -3753,7 +3874,7 @@ function createOpponentPlayers(formationName = opponentFormation) {
       number,
       name: "Gegner",
       x: coords.x,
-      y: 100 - coords.y, // Spiegeln für obere Hälfte
+      y: Math.min(44, 100 - coords.y), // obere Haelfte, harte Grenze
       active: true,
     };
   });
@@ -3867,7 +3988,7 @@ function getCoordinatesForPosition(position, style = "neutral") {
 
   return {
     x: coords.x,
-    y: Math.max(52, Math.min(98, coords.y + yModifier)) // Bleibt in unterer Hälfte
+    y: Math.max(56, Math.min(98, coords.y + yModifier)) // Bleibt in unterer Haelfte, harte 56er-Grenze
   };
 }
 
@@ -3876,7 +3997,7 @@ function getFormationRowCoordinates(position, rowX) {
   const x = Number(rowX);
   return {
     x: Number.isFinite(x) ? x : base.x,
-    y: base.y,
+    y: Math.max(56, 100 - (100 - base.y) * 0.92), // eigene Haelfte, harte Grenze
   };
 }
 
@@ -4214,7 +4335,10 @@ function getSlotCoordinates(position, slotIndex = 0) {
 function getSlotCoordinatesForFormation(formationName, position, slotIndex = 0) {
   const shape = formationRows(formationName);
   const duplicateCount = shape.filter(([currentPosition]) => currentPosition === position).length;
-  if (duplicateCount <= 1) return getCoordinatesForPosition(position, formationStyle || "neutral");
+  if (duplicateCount <= 1) {
+    const c = getCoordinatesForPosition(position, formationStyle || "neutral");
+    return { x: c.x, y: Math.max(56, 100 - (100 - c.y) * 0.92) }; // eigene Haelfte, harte Grenze
+  }
 
   const samePositionSlots = shape
     .map(([currentPosition], index) => ({ currentPosition, index }))
@@ -7615,12 +7739,31 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
 
   document.addEventListener("gesturestart", function (e) { e.preventDefault(); });
 
+  try {
+    var changed = false;
+    if (typeof opponents !== "undefined" && Array.isArray(opponents)) {
+      opponents.forEach(function (o) {
+        if (o && Number.isFinite(o.y) && o.y > 44) { o.y = 44; changed = true; }
+      });
+    }
+    if (typeof players !== "undefined" && Array.isArray(players)) {
+      players.forEach(function (p) {
+        var isSlotPlayer = p && (p.slotIndex !== undefined && p.slotIndex !== null);
+        if (p && p.active && (isSlotPlayer || !p.isManual) && Number.isFinite(p.y) && p.y < 56) { p.y = 56; changed = true; }
+      });
+    }
+    if (changed) {
+      if (typeof renderPlayers === "function") renderPlayers();
+      if (typeof renderOpponentPlayers === "function") renderOpponentPlayers();
+    }
+  } catch (e) {}
+
   var bootCover = document.getElementById("bootCover");
   if (bootCover) bootCover.remove();
 
   var badge = document.createElement("div");
   badge.className = "app-version-badge";
-  badge.textContent = "v13";
+  badge.textContent = "2.7";
   document.body.appendChild(badge);
 
   var backdrop = document.createElement("div");
@@ -7708,5 +7851,108 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
   }
 })();
 </script>
-  </body>
+  <script>
+(function () {
+  if (!window.matchMedia("(max-width: 900px)").matches) return;
+  var shell = document.querySelector(".app-shell");
+  var toolbar = document.querySelector(".toolbar");
+  if (!shell || !toolbar) return;
+
+  /* Schlanker Kopf: Logo, Status, Undo/Redo */
+  var mini = document.createElement("div");
+  mini.className = "mini-header";
+  var logoSrc = (document.querySelector(".brand-mark") || {}).src || "";
+  var logoHtml = logoSrc ? '<img src="' + logoSrc + '" alt="" />' : "";
+  mini.innerHTML = logoHtml + '<span class="mini-title">SG NOWO</span>';
+  var statusText = document.getElementById("statusText");
+  if (statusText) mini.appendChild(statusText);
+  var undoBtn = document.getElementById("undoAction");
+  var redoBtn = document.getElementById("redoAction");
+  if (undoBtn) mini.appendChild(undoBtn);
+  if (redoBtn) mini.appendChild(redoBtn);
+  shell.insertBefore(mini, shell.firstChild);
+
+  /* Werkzeuge-Sheet: alte Werkzeugleiste komplett hinein verschieben */
+  var sheet = document.createElement("div");
+  sheet.className = "tools-sheet";
+  sheet.appendChild(toolbar);
+  shell.appendChild(sheet);
+
+  function closeSheet() { sheet.classList.remove("is-open"); setTab("taktik"); }
+  function openSheet() { sheet.classList.add("is-open"); setTab("werkzeuge"); }
+
+  /* Tab-Leiste */
+  var tabs = [
+    { key: "taktik", ico: "\u26BD", label: "Taktik" },
+    { key: "werkzeuge", ico: "\u270F\uFE0F", label: "Werkzeuge" },
+    { key: "kader", ico: "\uD83D\uDC65", label: "Kader" },
+    { key: "spiele", ico: "\uD83D\uDCCB", label: "Spiele" },
+    { key: "mehr", ico: "\u2699\uFE0F", label: "Mehr" }
+  ];
+  var bar = document.createElement("div");
+  bar.className = "tab-bar";
+  var buttons = {};
+  tabs.forEach(function (t) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = '<span class="tab-ico">' + t.ico + '</span><span>' + t.label + '</span>';
+    b.addEventListener("click", function () { activate(t.key); });
+    buttons[t.key] = b;
+    bar.appendChild(b);
+  });
+  shell.appendChild(bar);
+
+  function setTab(key) {
+    Object.keys(buttons).forEach(function (k) { buttons[k].classList.toggle("is-active", k === key); });
+  }
+
+  function findSectionByTitle(title) {
+    var sections = document.querySelectorAll(".panel-section");
+    for (var i = 0; i < sections.length; i++) {
+      var s = sections[i].querySelector("summary span");
+      if (s && s.textContent.trim() === title) return sections[i];
+    }
+    return null;
+  }
+
+  function openPanelSection(sectionId) {
+    sheet.classList.remove("is-open");
+    document.body.classList.remove("panel-collapsed");
+    var section = typeof sectionId === "string" ? document.getElementById(sectionId) : sectionId;
+    if (section) {
+      section.setAttribute("open", "");
+      setTimeout(function () { section.scrollIntoView({ block: "start", behavior: "smooth" }); }, 260);
+    }
+  }
+
+  function activate(key) {
+    if (key === "taktik") {
+      sheet.classList.remove("is-open");
+      document.body.classList.add("panel-collapsed");
+      setTab("taktik");
+    } else if (key === "werkzeuge") {
+      document.body.classList.add("panel-collapsed");
+      sheet.classList.contains("is-open") ? closeSheet() : openSheet();
+    } else if (key === "kader") {
+      openPanelSection(findSectionByTitle("Kader") || "spielerpoolPanel");
+      setTab("kader");
+    } else if (key === "spiele") {
+      openPanelSection("matchPanel");
+      setTab("spiele");
+    } else if (key === "mehr") {
+      sheet.classList.remove("is-open");
+      var s = document.getElementById("openSettings");
+      if (s) s.click();
+      setTab("taktik");
+    }
+  }
+  setTab("taktik");
+
+  /* Panel-Schliessen setzt Tab zurueck */
+  document.addEventListener("click", function (ev) {
+    if (ev.target.closest && ev.target.closest(".panel-close-mobile")) setTab("taktik");
+  }, true);
+})();
+</script>
+</body>
 </html>
