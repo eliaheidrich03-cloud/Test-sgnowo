@@ -2707,6 +2707,30 @@ input[type="range"], input[type="color"] { touch-action: manipulation; }
   .opponent, .player.opponent { border-width: 2px; }
 }
 
+
+/* ===== Durchgaengiger dunkler App-Look ===== */
+html, body {
+  background: #0d100e !important;
+}
+.app-shell { background: transparent; }
+.pitch-wrap { box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5); }
+
+/* Versionsanzeige unten rechts */
+.app-version-badge {
+  position: fixed;
+  right: max(env(safe-area-inset-right), 8px);
+  bottom: max(env(safe-area-inset-bottom), 8px);
+  z-index: 800;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
 </style>
   </head>
   <body class="tab-match">
@@ -3591,7 +3615,7 @@ let lockSettings = {
   clockFormat: "time",
   clockSource: "system",
   manualClockOffsetMs: 0,
-  lockOnStart: false,
+  lockOnStart: true,
 };
 let autoLockTimer = null;
 let lockClockTimer = null;
@@ -5609,7 +5633,7 @@ function loadLockSettings() {
       clockFormat: ["time", "date-time", "time-12"].includes(saved.clockFormat) ? saved.clockFormat : "time",
       clockSource: ["system", "manual"].includes(saved.clockSource) ? saved.clockSource : "system",
       manualClockOffsetMs: Number(saved.manualClockOffsetMs) || 0,
-      lockOnStart: Boolean(saved.lockOnStart),
+      lockOnStart: saved.lockOnStart === undefined ? true : Boolean(saved.lockOnStart),
     };
   } catch (_error) {
     safeStorage.removeItem(LOCK_SETTINGS_KEY);
@@ -7604,6 +7628,12 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
   }
 
   document.addEventListener("gesturestart", function (e) { e.preventDefault(); });
+
+  // Sichtbare Versionsnummer, damit klar ist, welche Version laeuft
+  var badge = document.createElement("div");
+  badge.className = "app-version-badge";
+  badge.textContent = "v10";
+  document.body.appendChild(badge);
 
   /* Spieler-Waehler */
   var backdrop = document.createElement("div");
