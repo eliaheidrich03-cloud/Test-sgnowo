@@ -2560,7 +2560,12 @@ body.is-locked .app-shell {
 html { -webkit-text-size-adjust: 100%; }
 body { min-height: 100dvh; overscroll-behavior: none; -webkit-touch-callout: none; }
 .app-shell { height: 100dvh; }
-button, select, input[type="range"], input[type="color"] { touch-action: manipulation; }
+.toolbar button, .panel button, .modal button, .slot-picker button,
+.toolbar select, .panel select, .modal select,
+input[type="range"], input[type="color"] { touch-action: manipulation; }
+/* Spielfeld: Ziehen darf NIE als Scrollen interpretiert werden (iOS-Fix fuer freien Modus) */
+.pitch, .pitch * { touch-action: none !important; }
+.pitch .player, .pitch .player * { -webkit-user-select: none; user-select: none; }
 .mobile-fab, .panel-scrim, .panel-close-mobile { display: none; }
 
 .empty-slot::after {
@@ -2677,6 +2682,20 @@ button, select, input[type="range"], input[type="color"] { touch-action: manipul
   .player-note-modal .modal-header h2 { font-size: 1.25rem; }
   .player-note-body { padding: 14px; }
   .player-note-body textarea { font-size: 1.05rem; min-height: 34dvh; }
+}
+
+
+@media (max-width: 900px) {
+  /* Kompaktere Spieler-Marker gegen Ueberlappung */
+  .player, .empty-slot, .opponent-player {
+    width: clamp(34px, 9.4cqw, 52px);
+    height: clamp(34px, 9.4cqw, 52px);
+    border-width: 2px;
+  }
+  .player { font-size: clamp(0.72rem, 3cqw, 0.95rem); }
+  .player small, .opponent-player small { font-size: clamp(0.5rem, 2.2cqw, 0.68rem); max-width: clamp(58px, 16cqw, 96px); }
+  .opponent-player { font-size: clamp(0.72rem, 3cqw, 0.95rem); }
+  .opponent, .player.opponent { border-width: 2px; }
 }
 
 </style>
