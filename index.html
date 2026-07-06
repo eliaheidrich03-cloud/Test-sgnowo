@@ -1042,10 +1042,12 @@ input[type="range"] {
   pointer-events: none;
 }
 
+.field-lines rect { vector-effect: non-scaling-stroke; }
 .field-lines rect,
 .field-lines line,
 .field-lines circle,
 .field-lines path {
+  vector-effect: non-scaling-stroke;
   fill: none;
   stroke: var(--line);
   stroke-width: 2.6px;
@@ -2642,7 +2644,14 @@ input[type="range"], input[type="color"] { touch-action: manipulation; }
     grid-template-rows: minmax(0, 1fr) !important;
   }
   .pitch-wrap { height: 100%; min-height: 50dvh; aspect-ratio: auto; border-radius: 12px; }
-  .pitch { min-height: 0; }
+  .pitch {
+    min-height: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none;
+    max-height: none;
+    aspect-ratio: auto !important;
+  }
 
   .panel {
     position: fixed; top: 0; left: 0; bottom: 0;
@@ -7586,6 +7595,13 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
   }
 
   if (mq.matches || (("ontouchstart" in window) && window.innerWidth < 1100)) collapsePanel();
+
+  // Spielfeld-Linien an gestrecktes Feld anpassen (nur mobil)
+  if (mq.matches) {
+    document.querySelectorAll(".field-lines").forEach(function (svg) {
+      svg.setAttribute("preserveAspectRatio", "none");
+    });
+  }
 
   document.addEventListener("gesturestart", function (e) { e.preventDefault(); });
 
