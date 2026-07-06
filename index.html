@@ -2731,6 +2731,40 @@ html, body {
   pointer-events: none;
 }
 
+
+/* ===== v11: Sperrbildschirm-Layout mobil + echtes Vollbild ===== */
+@media (max-width: 900px) {
+  /* Vollbild-Fix: App spannt sich immer ueber den kompletten Bildschirm
+     (umgeht die iOS-Standalone-Eigenheit, bei der 100dvh unten Platz laesst) */
+  .app-shell {
+    position: fixed;
+    inset: 0;
+    height: auto !important;
+  }
+
+  /* Sperrbildschirm: Uhr klein oben, Logo Mitte, PIN-Feld unten */
+  .lock-overlay {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    place-items: center;
+    padding-top: max(env(safe-area-inset-top), 18px);
+    padding-bottom: max(env(safe-area-inset-bottom), 16px);
+  }
+  .lock-clock {
+    position: static;
+    translate: none;
+    width: auto;
+    font-size: 2.3rem;
+    line-height: 1;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: none;
+  }
+  .lock-clock small { font-size: 0.8rem; }
+  .lock-logo { max-width: 32vw; height: auto; }
+  .lock-logo.size-huge { max-width: 40vw; }
+  .unlock-form { width: 100%; max-width: 430px; }
+}
+
 </style>
   </head>
   <body class="tab-match">
@@ -7632,7 +7666,7 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
   // Sichtbare Versionsnummer, damit klar ist, welche Version laeuft
   var badge = document.createElement("div");
   badge.className = "app-version-badge";
-  badge.textContent = "v10";
+  badge.textContent = "v11";
   document.body.appendChild(badge);
 
   /* Spieler-Waehler */
