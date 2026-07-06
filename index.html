@@ -1042,12 +1042,10 @@ input[type="range"] {
   pointer-events: none;
 }
 
-.field-lines rect { vector-effect: non-scaling-stroke; }
 .field-lines rect,
 .field-lines line,
 .field-lines circle,
 .field-lines path {
-  vector-effect: non-scaling-stroke;
   fill: none;
   stroke: var(--line);
   stroke-width: 2.6px;
@@ -2506,77 +2504,71 @@ body.is-locked .app-shell {
 }
 
 
-/* ===== Design: Vereinslook, klare Kontraste ===== */
+/* ===== Design: Vereinslook ===== */
+html, body { background: #0d100e !important; }
 .toolbar {
   background: linear-gradient(180deg, #171b19, #0d100e);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
 }
-.toolbar h1 { color: #ffffff; letter-spacing: 0.02em; }
+.toolbar h1 { color: #fff; letter-spacing: 0.02em; }
 .toolbar #statusText { color: #b9c2bc; }
-.toolbar-row-tools { border-top-color: rgba(255, 255, 255, 0.09); }
-.brand-mark { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 8px 18px rgba(0, 0, 0, 0.45); }
-
-/* Buttons: deutlich lesbar — weisser Text auf klar abgesetzten dunklen Pills */
-.toolbar .text-button,
-.toolbar .icon-button,
-.toolbar .chip {
-  color: #ffffff;
-  font-weight: 800;
-  background: rgba(255, 255, 255, 0.13);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+.toolbar-row-tools { border-top-color: rgba(255,255,255,0.09); }
+.brand-mark { box-shadow: 0 0 0 2px rgba(255,255,255,0.9), 0 8px 18px rgba(0,0,0,0.45); }
+.toolbar .text-button, .toolbar .icon-button, .toolbar .chip {
+  color: #fff; font-weight: 800;
+  background: rgba(255,255,255,0.13);
+  border: 1px solid rgba(255,255,255,0.18);
   border-radius: 10px;
 }
-.toolbar .text-button:hover:not(.strong):not(.danger),
-.toolbar .icon-button:hover { background: rgba(255, 255, 255, 0.22); color: #fff; }
-.toolbar .text-button:active,
-.toolbar .icon-button:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.26); }
-.toolbar .text-button.strong { background: #ffffff; color: #0d100e; border-color: #ffffff; }
-.toolbar .tool-pill { background: rgba(255, 255, 255, 0.08); border-radius: 11px; }
+.toolbar .text-button:hover:not(.strong):not(.danger), .toolbar .icon-button:hover { background: rgba(255,255,255,0.22); color: #fff; }
+.toolbar .text-button:active, .toolbar .icon-button:active { transform: scale(0.96); }
+.toolbar .text-button.strong { background: #fff; color: #0d100e; border-color: #fff; }
+.toolbar .tool-pill { background: rgba(255,255,255,0.08); border-radius: 11px; }
 .toolbar .icon-button[disabled] { opacity: 0.3; }
-.toolbar .color-picker { border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.18); }
-.toolbar .stroke-control { color: #ffffff; }
-.toolbar select {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.13);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 10px;
+.toolbar .color-picker { border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); }
+.toolbar .stroke-control { color: #fff; }
+.toolbar select { color: #fff; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; }
+.toolbar .icon-button.is-active, .toolbar .text-button.is-active, .toolbar [aria-pressed="true"] {
+  background: #fff !important; color: #0d100e !important; border-color: #fff !important;
 }
-.toolbar .icon-button.is-active,
-.toolbar .text-button.is-active,
-.toolbar [aria-pressed="true"] {
-  background: #ffffff !important;
-  color: #0d100e !important;
-  border-color: #ffffff !important;
-}
+.pitch-wrap { background: linear-gradient(160deg, #171c19, #0e1210); border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 18px 50px rgba(0,0,0,0.5); }
+.empty-slot { border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.07); }
+.empty-slot:active { background: rgba(255,255,255,0.2); }
+.field-lines rect, .field-lines line, .field-lines circle, .field-lines path { vector-effect: non-scaling-stroke; }
 
-.pitch-wrap {
-  background: linear-gradient(160deg, #171c19, #0e1210);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-.empty-slot { border-color: rgba(255, 255, 255, 0.55); background: rgba(255, 255, 255, 0.07); }
-.empty-slot:active { background: rgba(255, 255, 255, 0.2); }
-
-
-/* ===== iPhone / Mobile ===== */
-html { -webkit-text-size-adjust: 100%; }
-body { min-height: 100dvh; overscroll-behavior: none; -webkit-touch-callout: none; }
-.app-shell { height: 100dvh; }
+/* Touch: Spielfeld-Ziehen nie als Scrollen deuten (iOS) */
 .toolbar button, .panel button, .modal button, .slot-picker button,
 .toolbar select, .panel select, .modal select,
 input[type="range"], input[type="color"] { touch-action: manipulation; }
-/* Spielfeld: Ziehen darf NIE als Scrollen interpretiert werden (iOS-Fix fuer freien Modus) */
 .pitch, .pitch * { touch-action: none !important; }
 .pitch .player, .pitch .player * { -webkit-user-select: none; user-select: none; }
+
+html { -webkit-text-size-adjust: 100%; }
+body { min-height: 100dvh; overscroll-behavior: none; -webkit-touch-callout: none; }
+.app-shell { height: 100dvh; }
 .mobile-fab, .panel-scrim, .panel-close-mobile { display: none; }
 
 .empty-slot::after {
   content: "+";
   font-size: clamp(1.3rem, 2.8cqw, 2.2rem);
   font-weight: 800;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  color: rgba(255,255,255,0.9);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
   line-height: 1;
+}
+
+.app-version-badge {
+  position: fixed;
+  right: max(env(safe-area-inset-right), 8px);
+  bottom: max(env(safe-area-inset-bottom), 8px);
+  z-index: 800;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.55);
+  color: rgba(255,255,255,0.75);
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06em;
+  pointer-events: none;
 }
 
 .slot-picker-backdrop { position: fixed; inset: 0; z-index: 1200; background: rgba(0,0,0,0.5); display: none; }
@@ -2607,6 +2599,9 @@ input[type="range"], input[type="color"] { touch-action: manipulation; }
 
 @media (max-width: 900px) {
   .app-shell {
+    position: fixed;
+    inset: 0;
+    height: auto;
     padding: max(env(safe-area-inset-top), 4px) max(env(safe-area-inset-right), 4px)
              max(env(safe-area-inset-bottom), 4px) max(env(safe-area-inset-left), 4px);
     gap: 4px;
@@ -2618,8 +2613,6 @@ input[type="range"], input[type="color"] { touch-action: manipulation; }
   h1 { font-size: 0.95rem; }
   #statusText { font-size: 0.66rem; }
   .toolbar-row { gap: 8px; }
-
-  /* Fluessiges horizontales Wischen + Kanten-Andeutung */
   .toolbar-row-tools {
     padding-top: 5px;
     overflow-x: auto;
@@ -2635,7 +2628,6 @@ input[type="range"], input[type="color"] { touch-action: manipulation; }
   .control-group-label { display: none; }
   .chip, .text-button { flex: 0 0 auto; white-space: nowrap; font-size: 0.78rem; padding: 0 10px; min-height: 38px; }
   .icon-button { min-width: 38px; min-height: 38px; }
-  /* Schatten/Transitions beim Wischen reduzieren = fluessiger */
   .toolbar .text-button, .toolbar .icon-button { transition: none; box-shadow: none; }
 
   .workspace,
@@ -2652,6 +2644,14 @@ input[type="range"], input[type="color"] { touch-action: manipulation; }
     max-height: none;
     aspect-ratio: auto !important;
   }
+
+  .player, .empty-slot, .opponent-player {
+    width: clamp(34px, 9.4cqw, 52px);
+    height: clamp(34px, 9.4cqw, 52px);
+    border-width: 2px;
+  }
+  .player, .opponent-player { font-size: clamp(0.72rem, 3cqw, 0.95rem); }
+  .player small, .opponent-player small { font-size: clamp(0.5rem, 2.2cqw, 0.68rem); max-width: clamp(58px, 16cqw, 96px); }
 
   .panel {
     position: fixed; top: 0; left: 0; bottom: 0;
@@ -2691,58 +2691,8 @@ input[type="range"], input[type="color"] { touch-action: manipulation; }
   .player-note-modal .modal-header h2 { font-size: 1.25rem; }
   .player-note-body { padding: 14px; }
   .player-note-body textarea { font-size: 1.05rem; min-height: 34dvh; }
-}
 
-
-@media (max-width: 900px) {
-  /* Kompaktere Spieler-Marker gegen Ueberlappung */
-  .player, .empty-slot, .opponent-player {
-    width: clamp(34px, 9.4cqw, 52px);
-    height: clamp(34px, 9.4cqw, 52px);
-    border-width: 2px;
-  }
-  .player { font-size: clamp(0.72rem, 3cqw, 0.95rem); }
-  .player small, .opponent-player small { font-size: clamp(0.5rem, 2.2cqw, 0.68rem); max-width: clamp(58px, 16cqw, 96px); }
-  .opponent-player { font-size: clamp(0.72rem, 3cqw, 0.95rem); }
-  .opponent, .player.opponent { border-width: 2px; }
-}
-
-
-/* ===== Durchgaengiger dunkler App-Look ===== */
-html, body {
-  background: #0d100e !important;
-}
-.app-shell { background: transparent; }
-.pitch-wrap { box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5); }
-
-/* Versionsanzeige unten rechts */
-.app-version-badge {
-  position: fixed;
-  right: max(env(safe-area-inset-right), 8px);
-  bottom: max(env(safe-area-inset-bottom), 8px);
-  z-index: 800;
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.55);
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  pointer-events: none;
-}
-
-
-/* ===== v11: Sperrbildschirm-Layout mobil + echtes Vollbild ===== */
-@media (max-width: 900px) {
-  /* Vollbild-Fix: App spannt sich immer ueber den kompletten Bildschirm
-     (umgeht die iOS-Standalone-Eigenheit, bei der 100dvh unten Platz laesst) */
-  .app-shell {
-    position: fixed;
-    inset: 0;
-    height: auto !important;
-  }
-
-  /* Sperrbildschirm: Uhr klein oben, Logo Mitte, PIN-Feld unten */
+  /* Sperrbildschirm: Uhr klein oben, Logo Mitte, PIN unten */
   .lock-overlay {
     grid-template-rows: auto minmax(0, 1fr) auto;
     place-items: center;
@@ -2756,7 +2706,7 @@ html, body {
     font-size: 2.3rem;
     line-height: 1;
     font-weight: 900;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255,255,255,0.85);
     text-shadow: none;
   }
   .lock-clock small { font-size: 0.8rem; }
@@ -7654,7 +7604,6 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
 
   if (mq.matches || (("ontouchstart" in window) && window.innerWidth < 1100)) collapsePanel();
 
-  // Spielfeld-Linien an gestrecktes Feld anpassen (nur mobil)
   if (mq.matches) {
     document.querySelectorAll(".field-lines").forEach(function (svg) {
       svg.setAttribute("preserveAspectRatio", "none");
@@ -7663,13 +7612,11 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
 
   document.addEventListener("gesturestart", function (e) { e.preventDefault(); });
 
-  // Sichtbare Versionsnummer, damit klar ist, welche Version laeuft
   var badge = document.createElement("div");
   badge.className = "app-version-badge";
-  badge.textContent = "v11";
+  badge.textContent = "v12";
   document.body.appendChild(badge);
 
-  /* Spieler-Waehler */
   var backdrop = document.createElement("div");
   backdrop.className = "slot-picker-backdrop";
   var sheet = document.createElement("div");
@@ -7750,7 +7697,6 @@ if (useDefaultPlayerPool || masterPlayerPool.length === 0) {
     openPicker(idx, slot.dataset.position || "");
   }, true);
 
-  /* Offline-Faehigkeit: Service Worker registrieren (nur ueber https) */
   if ("serviceWorker" in navigator && location.protocol === "https:") {
     navigator.serviceWorker.register("./sw.js").catch(function () {});
   }
